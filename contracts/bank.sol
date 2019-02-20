@@ -1,10 +1,11 @@
-pragma solidity ^0.5.1;  // solhint-disable-line compiler-fixed, compiler-gt-0_4
 //solium-disable linebreak-style
+pragma solidity ^0.4.17;
+
 contract Bank{
     
-    address owner;
+    address public owner;
     
-    constructor()public{
+    function Bank()public{
         owner = msg.sender;
     }
     
@@ -14,23 +15,25 @@ contract Bank{
     }
     
     //actual deeds mapped to their serial#
-    mapping(string => Deed) property;
+    mapping(string => string) property;
     
     //addresses of deployed deeds
     address[] public properties;
     
-    function getOwner(string memory serial) public view returns(Deed){
+    function getOwner(string memory serial) public view returns(string){
         return property[serial];
     }
     
-    function newDeed(address _owner,string memory _id, string memory _serial,uint _size) restricted public{
+    function newDeed(address _owner,string memory _id, string memory _serial,uint _size) public{
+       
         Deed deed = new Deed(
              _owner,
             _id,
             _serial,
             _size
         );
-        property[_serial] = deed; 
+        
+        property[_serial] = _id; 
         properties.push(address(deed));
     }
     
@@ -51,7 +54,7 @@ contract Deed{
         _;
     }
     
-    constructor(address _owner,string memory _id, string memory _serial,uint _size) public{
+    function Deed(address _owner,string memory _id, string memory _serial,uint _size) public{
         owner = _owner;
         id = _id;
         serial = _serial;
@@ -71,4 +74,5 @@ contract Deed{
         id = _id;
         price = address(this).balance;
     }
+    
 }

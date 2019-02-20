@@ -5,46 +5,26 @@ const solc = require("solc");
 const buildPath = path.resolve(__dirname,"build");
 
 // delete build folder
+console.log('\n-Deleting build directory...')
 fs.removeSync(buildPath);
+console.log('\n-Build directory deleted...')
 
 const BankPath = path.resolve(__dirname,"contracts","bank.sol");
 
-const Source = fs.readFileSync(BankPath,'utf8');
+console.log('\n-Reading source code from file...')
+const source = fs.readFileSync(BankPath,'utf8');
 
-var input = {
-	language: 'Solidity',
-	sources: {
-		'bank.sol': {
-			content: Source
-		}
-	},
-	settings: {
-		outputSelection: {
-			'*': {
-				'*': [ '*' ]
-			}
-		}
-	}
-}
+console.log('\n-Compiling source code...')
+const output = solc.compile(source,1).contracts;
 
-var output = JSON.parse(solc.compile(JSON.stringify(input)))
-
+console.log('\n-Creating build folder...')
 fs.ensureDirSync(buildPath);
 
-for (let contract in output.contracts['bank.sol']) {
-    fs.outputJsonSync(
-        buildPath+"/"+contract+".json",
-        output.contracts['bank.sol'][contract]
-    );
-    
+console.log('\n-Outputing compiled contracts...')
+for (let contract in output) {
+    fs.outputJSONSync(
+		path.resolve(buildPath,contract.replace(":","")+".json"),
+		output[contract]
+	);
 }
-
-// for( let contract in output){
-//     console.log(contract)
-//     fs.outputJSONSync(
-//         path.resolve(buildPath,contract.replace(":","")+".json"),
-//         output[contract]
-//     );
-// }
-
-
+console.log('\n-Proccess comlete!')

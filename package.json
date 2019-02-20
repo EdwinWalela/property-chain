@@ -4,12 +4,15 @@
   "description": "",
   "main": "compile.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "mocha": "^5.2.0",
-    "solc": "^0.5.1"
+    "solc": "^0.4.25",
+    "ganache-cli": "^6.1.8",
+    "truffle-hdwallet-provider": "0.0.3",
+    "web3": "^1.0.0-beta.35"
   }
 }
