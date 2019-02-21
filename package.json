@@ -14,6 +14,6 @@
     "solc": "^0.4.25",
     "ganache-cli": "^6.1.8",
     "truffle-hdwallet-provider": "0.0.3",
-    "web3": "^1.0.0-beta.35"
+    "web3": "2.0.0-beta.35"
   }
 }
