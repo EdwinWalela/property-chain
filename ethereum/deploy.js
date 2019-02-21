@@ -3,10 +3,11 @@ const compiledFactory = require("./build/Bank.json");
 const Web3 = require("web3");
 const fs = require('fs-extra');
 const path = require("path");
+const config = require("./config");
 
 const provider = new HDWalletProvider(
-    'believe odor road reduce anxiety avocado dinosaur gloom rescue allow canoe moon',
-    'https://rinkeby.infura.io/v3/cc26814c66a44066a854bde9cb095aaf'
+    config.MNEMONIC,
+    config.URI
 );
 
 const web3 = new Web3(provider);
